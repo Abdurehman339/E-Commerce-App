@@ -9,7 +9,7 @@ const Container = styled.section`
 `
 
 const Wrapper = styled.div`
-  padding: 10px 20px;
+  padding: 0px 20px;
   display: flex;
   align-items: center;
   justify-content: center;
