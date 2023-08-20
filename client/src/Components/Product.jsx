@@ -43,9 +43,13 @@ const Icon = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
-  margin: 2px;
+  margin: 3px;
   opacity: 0.8;
   cursor: pointer;
+  transition: all 0.2s ease;
+  &:hover{
+    transform: scale(1.1);
+  }
 `
 
 
