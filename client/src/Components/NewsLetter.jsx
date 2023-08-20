@@ -49,8 +49,7 @@ const NewsLetter = () => {
       <InputContainer>
         <Input placeholder='Email'/>
         <Button>
-            <Send style={{
-                            }}/>
+            <Send/>
         </Button>
       </InputContainer>
     </Container>
