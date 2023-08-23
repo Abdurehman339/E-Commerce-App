@@ -1,10 +1,10 @@
 import React from 'react'
 import styled from 'styled-components'
-import Navbar from './Navbar'
-import Announcement from './Announcement'
-import Products from './Products'
-import NewsLetter from './NewsLetter'
-import Footer from './Footer'
+import Navbar from '../Components/Navbar'
+import Announcement from '../Components/Announcement'
+import Products from '../Components/Products'
+import NewsLetter from '../Components/NewsLetter'
+import Footer from '../Components/Footer'
 
 const Container = styled.div``
 const Title = styled.h1`
