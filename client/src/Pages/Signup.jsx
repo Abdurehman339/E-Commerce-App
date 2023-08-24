@@ -2,8 +2,6 @@ import React from "react";
 import styled from "styled-components";
 import ShoppingCartOutlinedIcon from "@mui/icons-material/ShoppingCartOutlined";
 import Visibility from "@mui/icons-material/Visibility";
-import google from "../Images/google.png";
-import facebook from "../Images/facebook.png";
 
 const Container = styled.div`
   width: 100vw;
@@ -29,9 +27,11 @@ const LogoContainer = styled.div`
 const LoginContainer = styled.div`
   width: 60%;
   margin-right: 7vw;
-  box-shadow: 10px 10px 4px -1px rgba(0,0,0,0.15);
+  box-shadow: 10px 10px 4px -1px rgba(0, 0, 0, 0.15);
   display: flex;
   flex-direction: column;
+  align-items: center;
+  justify-content: center;
   background-color: transparent;
   height: 70%;
   border-radius: 30px;
@@ -42,7 +42,7 @@ const Title = styled.h2`
   text-align: center;
   margin: 4vh 0;
 `;
-const Email = styled.input`
+const Username = styled.input`
   align-self: center;
   width: 80%;
   border: none;
@@ -52,6 +52,17 @@ const Email = styled.input`
   padding-left: 10px;
   background-color: rgba(217, 217, 217, 0.5);
 `;
+const Email = styled.input`
+  align-self: center;
+  width: 80%;
+  border: none;
+  height: 7vh;
+  border-radius: 10px;
+  outline: none;
+  padding-left: 10px;
+  background-color: rgba(217, 217, 217, 0.5);
+  margin-top: 20px;
+`;
 const PasswordContainer = styled.div`
   align-self: center;
   display: flex;
@@ -60,7 +71,7 @@ const PasswordContainer = styled.div`
   height: 7vh;
   border-radius: 10px;
   outline: none;
-  background-color: rgba(217,217,217,0.5);
+  background-color: rgba(217, 217, 217, 0.5);
 `;
 const Password = styled.input`
   flex: 9;
@@ -70,11 +81,15 @@ const Password = styled.input`
   outline: none;
   background-color: transparent;
 `;
-const ForgotPassword = styled.a`
-  margin: 1vh 4vw;
-  color: teal;
+const ConfirmPassword = styled.input`
+  flex: 9;
+  border: none;
+  border-radius: 10px;
+  padding-left: 10px;
+  outline: none;
+  background-color: transparent;
 `;
-const LoginButton = styled.button`
+const SignupButton = styled.button`
   align-self: center;
   width: 25%;
   border-radius: 20px;
@@ -83,24 +98,14 @@ const LoginButton = styled.button`
   border: none;
   margin: 20px 0;
 `;
-const SignupButton = styled.a`
-  align-self: center;
-  margin: 10px 0;
-`;
-const LinksContainer = styled.div`
-  align-self: center;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  margin-top: 20px;
-`;
 
-const Login = () => {
+const Signup = () => {
   return (
     <Container>
       <Wrapper>
         <LoginContainer>
-          <Title>Login In</Title>
+          <Title>Sign Up</Title>
+          <Username placeholder="Username" />
           <Email placeholder="Email" />
           <PasswordContainer>
             <Password placeholder="Password" type="password"/>
@@ -109,33 +114,22 @@ const Login = () => {
                 flex: "1",
                 cursor: "pointer",
                 alignSelf: "center",
-                backgroundColor: "transparent"
+                backgroundColor: "transparent",
               }}
             />
           </PasswordContainer>
-          <ForgotPassword href="#">Forgot Password</ForgotPassword>
-          <LoginButton>Login In</LoginButton>
-          <SignupButton href="#">SignUp</SignupButton>
-          <LinksContainer>
-            <img
-              src={google}
+          <PasswordContainer>
+            <ConfirmPassword placeholder="Confirm Password" type="password"/>
+            <Visibility
               style={{
-                height: "25px",
-                width: "25px",
-                marginLeft: "10px",
+                flex: "1",
                 cursor: "pointer",
+                alignSelf: "center",
+                backgroundColor: "transparent",
               }}
             />
-            <img
-              src={facebook}
-              style={{
-                height: "30px",
-                width: "30px",
-                marginLeft: "10px",
-                cursor: "pointer",
-              }}
-            />
-          </LinksContainer>
+          </PasswordContainer>
+          <SignupButton>Sign Up</SignupButton>
         </LoginContainer>
       </Wrapper>
       <LogoContainer>
@@ -151,4 +145,4 @@ const Login = () => {
   );
 };
 
-export default Login;
+export default Signup;
