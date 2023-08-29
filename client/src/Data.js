@@ -24,16 +24,19 @@ export const categories = [
       id: 1,
       img: "https://images.pexels.com/photos/5886041/pexels-photo-5886041.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940",
       title: "SHIRT STYLE!",
+      cat: "women"
     },
     {
       id: 2,
       img: require('./Images/category_img_2.jpeg'),
       title: "LOUNGEWEAR LOVE",
+      cat: "coat"
     },
     {
       id: 3,
       img: require('./Images/category_img_3.jpeg'),
       title: "LIGHT JACKETS",
+      cat: "jeans"
     },
 ];
 
