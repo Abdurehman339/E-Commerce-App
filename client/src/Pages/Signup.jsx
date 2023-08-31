@@ -1,7 +1,9 @@
-import React from "react";
+import React, { useState } from "react";
 import styled from "styled-components";
 import ShoppingCartOutlinedIcon from "@mui/icons-material/ShoppingCartOutlined";
 import Visibility from "@mui/icons-material/Visibility";
+import { signUp } from "../Redux/apiCalls";
+import { useNavigate } from "react-router-dom";
 
 const Container = styled.div`
   width: 100vw;
@@ -100,15 +102,33 @@ const SignupButton = styled.button`
 `;
 
 const Signup = () => {
+  const [username, setUsername] = useState("");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const navigate = useNavigate();
+  const handleRegister = () => {
+    signUp({ username, email, password });
+    navigate('/login')
+  };
   return (
     <Container>
       <Wrapper>
         <LoginContainer>
           <Title>Sign Up</Title>
-          <Username placeholder="Username" />
-          <Email placeholder="Email" />
+          <Username
+            placeholder="Username"
+            onChange={(e) => setUsername(e.target.value)}
+          />
+          <Email
+            placeholder="Email"
+            onChange={(e) => setEmail(e.target.value)}
+          />
           <PasswordContainer>
-            <Password placeholder="Password" type="password"/>
+            <Password
+              placeholder="Password"
+              type="password"
+              onChange={(e) => setPassword(e.target.value)}
+            />
             <Visibility
               style={{
                 flex: "1",
@@ -119,7 +139,7 @@ const Signup = () => {
             />
           </PasswordContainer>
           <PasswordContainer>
-            <ConfirmPassword placeholder="Confirm Password" type="password"/>
+            <ConfirmPassword placeholder="Confirm Password" type="password" />
             <Visibility
               style={{
                 flex: "1",
@@ -129,7 +149,7 @@ const Signup = () => {
               }}
             />
           </PasswordContainer>
-          <SignupButton>Sign Up</SignupButton>
+          <SignupButton onClick={handleRegister}>Sign Up</SignupButton>
         </LoginContainer>
       </Wrapper>
       <LogoContainer>

@@ -1,9 +1,12 @@
-import React from "react";
+import {React, useState} from "react";
 import styled from "styled-components";
 import ShoppingCartOutlinedIcon from "@mui/icons-material/ShoppingCartOutlined";
 import Visibility from "@mui/icons-material/Visibility";
+import VisibilityOff from '@mui/icons-material/VisibilityOff';
 import google from "../Images/google.png";
 import facebook from "../Images/facebook.png";
+import { useDispatch, useSelector } from "react-redux";
+import { login } from "../Redux/apiCalls";
 
 const Container = styled.div`
   width: 100vw;
@@ -96,25 +99,45 @@ const LinksContainer = styled.div`
 `;
 
 const Login = () => {
+  const [username,setUsername] = useState('');
+  const [password, setPassword] = useState('');
+  const [hidden, setHidden] = useState(true);
+  const dispatch = useDispatch(); 
+  const handleLogin = (e) => {
+    e.preventDefault();
+    login(dispatch, {username, password});
+  }
+
   return (
     <Container>
       <Wrapper>
         <LoginContainer>
-          <Title>Login In</Title>
-          <Email placeholder="Email" />
+          <Title>Log In</Title>
+          <Email placeholder="Email" onChange={(e)=>setUsername(e.target.value)}/>
           <PasswordContainer>
-            <Password placeholder="Password" type="password"/>
-            <Visibility
-              style={{
-                flex: "1",
-                cursor: "pointer",
-                alignSelf: "center",
-                backgroundColor: "transparent"
-              }}
-            />
+            <Password placeholder="Password" type={hidden? 'password' : 'text'} onChange={(e)=>setPassword(e.target.value)}/>
+            {hidden? 
+              <VisibilityOff
+                onClick={e=>setHidden(!hidden)}  
+                style={{
+                  flex: "1",
+                  cursor: "pointer",
+                  alignSelf: "center",
+                  backgroundColor: "transparent"
+                }}/> 
+                : 
+                <Visibility
+                  onClick={e=>setHidden(!hidden)}  
+                  style={{
+                    flex: "1",
+                    cursor: "pointer",
+                    alignSelf: "center",
+                    backgroundColor: "transparent"
+              }}></Visibility>
+            }
           </PasswordContainer>
           <ForgotPassword href="#">Forgot Password</ForgotPassword>
-          <LoginButton>Login In</LoginButton>
+          <LoginButton onClick={handleLogin}>Login In</LoginButton>
           <SignupButton href="#">SignUp</SignupButton>
           <LinksContainer>
             <img
