@@ -1,6 +1,9 @@
 import { authReq } from "../Request";
 import { loginFailure, loginSuccess, loginStart, logOut } from "./userSlice";
+import { toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
+//Login API Call Function
 export const login = async (dispatch, user) => {
   dispatch(loginStart());
   try {
@@ -10,7 +13,13 @@ export const login = async (dispatch, user) => {
     });
     dispatch(loginSuccess(res.data));
   } catch (error) {
-    dispatch(loginFailure());
+    if (error.response.status === 401) {
+      toast.error("Invalid Username or Password");
+      dispatch(loginFailure());
+    } else {
+      toast.error("Something went wrong");
+      dispatch(loginFailure());
+    }
   }
 };
 
@@ -18,15 +27,44 @@ export const logout = (dispatch) => {
   dispatch(logOut());
 };
 
+//SignUp API Call Function
 export const signUp = async (user) => {
-  try {
-    const res = await authReq.post("/register", {
-      username: user.username,
-      email: user.email,
-      password: user.password,
-    });
-    console.log(res.data);
-  } catch (error) {
-    console.log(error);
+  if (
+    !user.username ||
+    !user.email ||
+    !user.password ||
+    !user.confirmPassword
+  ) {
+    toast.error("Please fill the complete form !");
+    return false;
+  } else if (user.password == user.confirmPassword) {
+    try {
+      const res = await authReq.post("/register", {
+        username: user.username,
+        email: user.email,
+        password: user.password,
+      });
+      if (res.data.alreadyExistedUsername && res.data.alreadyExistedEmail) {
+        toast.error("Usersername and Email already exists !");
+        return false;
+      } else if (
+        res.data.alreadyExistedUsername ||
+        res.data.alreadyExistedEmail
+      ) {
+        res.data.alreadyExistedUsername
+          ? toast.error("Usersername already exists !")
+          : toast.error("Email already exists !");
+        return false;
+      } else {
+        toast.success("Account has been created !");
+        return true;
+      }
+    } catch (error) {
+      toast.error("Something went wrong !");
+      return false;
+    }
+  } else {
+    toast.error("Passwords do not match !");
+    return false;
   }
 };

@@ -5,8 +5,9 @@ import Visibility from "@mui/icons-material/Visibility";
 import VisibilityOff from '@mui/icons-material/VisibilityOff';
 import google from "../Images/google.png";
 import facebook from "../Images/facebook.png";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import { login } from "../Redux/apiCalls";
+import { ToastContainer } from "react-toastify";
 
 const Container = styled.div`
   width: 100vw;
@@ -110,6 +111,7 @@ const Login = () => {
 
   return (
     <Container>
+      <ToastContainer position="bottom-right"/>
       <Wrapper>
         <LoginContainer>
           <Title>Log In</Title>
@@ -138,7 +140,7 @@ const Login = () => {
           </PasswordContainer>
           <ForgotPassword href="#">Forgot Password</ForgotPassword>
           <LoginButton onClick={handleLogin}>Login In</LoginButton>
-          <SignupButton href="#">SignUp</SignupButton>
+          <SignupButton href="/signup">SignUp</SignupButton>
           <LinksContainer>
             <img
               src={google}

@@ -2,8 +2,10 @@ import React, { useState } from "react";
 import styled from "styled-components";
 import ShoppingCartOutlinedIcon from "@mui/icons-material/ShoppingCartOutlined";
 import Visibility from "@mui/icons-material/Visibility";
+import VisibilityOff from "@mui/icons-material/VisibilityOff";
 import { signUp } from "../Redux/apiCalls";
 import { useNavigate } from "react-router-dom";
+import { ToastContainer } from "react-toastify";
 
 const Container = styled.div`
   width: 100vw;
@@ -105,13 +107,25 @@ const Signup = () => {
   const [username, setUsername] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [confirmPassword, setConfirmPassword] = useState("");
+  const [hidden, setHidden] = useState(true);
   const navigate = useNavigate();
-  const handleRegister = () => {
-    signUp({ username, email, password });
-    navigate('/login')
+  const handleRegister = async () => {
+    const isSignedUp = await signUp({
+      username,
+      email,
+      password,
+      confirmPassword,
+    });
+    if (isSignedUp) {
+      setTimeout(() => {
+        navigate("/login");
+      }, 6000);
+    }
   };
   return (
     <Container>
+      <ToastContainer position="bottom-right" />
       <Wrapper>
         <LoginContainer>
           <Title>Sign Up</Title>
@@ -126,28 +140,58 @@ const Signup = () => {
           <PasswordContainer>
             <Password
               placeholder="Password"
-              type="password"
+              type={hidden ? "password" : "text"}
               onChange={(e) => setPassword(e.target.value)}
             />
-            <Visibility
-              style={{
-                flex: "1",
-                cursor: "pointer",
-                alignSelf: "center",
-                backgroundColor: "transparent",
-              }}
-            />
+            {hidden ? (
+              <VisibilityOff
+                onClick={(e) => setHidden(!hidden)}
+                style={{
+                  flex: "1",
+                  cursor: "pointer",
+                  alignSelf: "center",
+                  backgroundColor: "transparent",
+                }}
+              />
+            ) : (
+              <Visibility
+                onClick={(e) => setHidden(!hidden)}
+                style={{
+                  flex: "1",
+                  cursor: "pointer",
+                  alignSelf: "center",
+                  backgroundColor: "transparent",
+                }}
+              />
+            )}
           </PasswordContainer>
           <PasswordContainer>
-            <ConfirmPassword placeholder="Confirm Password" type="password" />
-            <Visibility
-              style={{
-                flex: "1",
-                cursor: "pointer",
-                alignSelf: "center",
-                backgroundColor: "transparent",
-              }}
+            <ConfirmPassword
+              placeholder="Confirm Password"
+              type={hidden ? "password" : "text"}
+              onChange={(e) => setConfirmPassword(e.target.value)}
             />
+            {hidden ? (
+              <VisibilityOff
+                onClick={(e) => setHidden(!hidden)}
+                style={{
+                  flex: "1",
+                  cursor: "pointer",
+                  alignSelf: "center",
+                  backgroundColor: "transparent",
+                }}
+              />
+            ) : (
+              <Visibility
+                onClick={(e) => setHidden(!hidden)}
+                style={{
+                  flex: "1",
+                  cursor: "pointer",
+                  alignSelf: "center",
+                  backgroundColor: "transparent",
+                }}
+              />
+            )}
           </PasswordContainer>
           <SignupButton onClick={handleRegister}>Sign Up</SignupButton>
         </LoginContainer>
