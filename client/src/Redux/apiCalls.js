@@ -1,5 +1,7 @@
 import { authReq } from "../Request";
+import { addProduct } from "../Request";
 import { loginFailure, loginSuccess, loginStart, logOut } from "./userSlice";
+import { fetchingStart, Success, Failure } from "./productSlice";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
@@ -11,6 +13,7 @@ export const login = async (dispatch, user) => {
       username: user.username,
       password: user.password,
     });
+    localStorage.setItem("token", res.data.token);
     dispatch(loginSuccess(res.data));
   } catch (error) {
     if (error.response.status === 401) {
@@ -23,7 +26,9 @@ export const login = async (dispatch, user) => {
   }
 };
 
+//Logout API Call Function
 export const logout = (dispatch) => {
+  localStorage.removeItem("token");
   dispatch(logOut());
 };
 
@@ -68,3 +73,41 @@ export const signUp = async (user) => {
     return false;
   }
 };
+
+//Add Product API Call Function
+export const AddProduct = async () => {
+  try {
+    // dispatch(fetchingStart())
+    const res = await addProduct.post(
+      "/addProduct",
+      {
+        title: "abc",
+        desc: "abc",
+        img: "abc",
+        categories: ["abc"],
+        size: "abc",
+        color: "abc",
+        price: 400,
+      },
+      {
+        headers: {
+          jwt: localStorage.getItem("token"),
+        },
+      }
+    );
+    res.status(200).json('Add Product Successfully')
+    // dispatch(Success(res.data));
+  } catch (error) {
+    toast.error("Something went wrong");
+    // dispatch(Failure());
+  }
+};
+
+//Uploading Product Image
+const uploadImage = async (formData)=>{
+  try {
+    const res = await addProduct.post('/uploadimage', formData)
+  } catch (error) {
+    console.log(error)
+  }
+}

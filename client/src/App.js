@@ -7,9 +7,10 @@ import Signup from './Pages/Signup';
 import Cart from './Pages/Cart';
 import {BrowserRouter as Router,Routes,Route, Navigate} from "react-router-dom";
 import { useSelector } from "react-redux";
+import AddProductPage from './Pages/AddProductPage';
 
 function App() {
-  const user = useSelector((state) => state.user.currentUser);
+  const user = useSelector((state) => state.rootReducer.user.currentUser);
   return (
     <Router>
       <div>
@@ -20,6 +21,7 @@ function App() {
           <Route path="/cart" element={<Cart/>}/>
           <Route path="/login" element={user ? <Navigate to="/"/> : <Login />}/>
           <Route path="/signup" element={<Signup/>}/>
+          <Route path="/addproduct" element={<AddProductPage/>}/>
         </Routes>
       </div>
     </Router>

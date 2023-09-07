@@ -41,37 +41,37 @@ export const categories = [
 ];
 
 export const popularProducts = [
-  {
-    id:1,
-    img:require('./Images/shirt.png'),
-  },
-  {
-    id:2,
-    img:require('./Images/shirt2.png'),
-  },
-  {
-    id:3,
-    img:require('./Images/shirt3.png'),
-  },
-  {
-    id:4,
-    img:require('./Images/bag2.png'),
-  },
-  {
-    id:5,
-    img:require('./Images/bag1.png'),
-  },
-  {
-    id:6,
-    img:require('./Images/cap.png'),
-  },
-  {
-    id:7,
-    img:require('./Images/jacket.png'),
-  },
-  {
-    id:8,
-    img:require('./Images/women_jacket.png'),
-  },
+  // {
+  //   id:1,
+  //   img:require('./Images/shirt.png'),
+  // },
+  // {
+  //   id:2,
+  //   img:require('./Images/shirt2.png'),
+  // },
+  // {
+  //   id:3,
+  //   img:require('./Images/shirt3.png'),
+  // },
+  // {
+  //   id:4,
+  //   img:require('./Images/bag2.png'),
+  // },
+  // {
+  //   id:5,
+  //   img:require('./Images/bag1.png'),
+  // },
+  // {
+  //   id:6,
+  //   img:require('./Images/cap.png'),
+  // },
+  // {
+  //   id:7,
+  //   img:require('./Images/jacket.png'),
+  // },
+  // {
+  //   id:8,
+  //   img:require('./Images/women_jacket.png'),
+  // },
 ]
 

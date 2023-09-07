@@ -4,6 +4,7 @@ import SearchIcon from "@mui/icons-material/Search";
 import ShoppingCartOutlinedIcon from "@mui/icons-material/ShoppingCartOutlined";
 import { useDispatch, useSelector } from "react-redux";
 import { logout } from "../Redux/apiCalls";
+import { AddProduct } from "../Redux/apiCalls";
 
 const Container = styled.section`
   height: 60px;
@@ -73,11 +74,14 @@ const MenuItem = styled.div`
 `;
 
 const Navbar = () => {
-  const user = useSelector((state) => state.user.currentUser);
+  const user = useSelector((state) => state.rootReducer.user.currentUser);
   const dispatch = useDispatch();
   const handleLogout = () => {
     logout(dispatch);
   };
+  const handleAddProduct = ()=>{
+    AddProduct();
+  }
   return (
     <Container>
       <Wrapper>
@@ -97,7 +101,7 @@ const Navbar = () => {
           </MenuItem>
           <MenuItem>{!user && "Register"}</MenuItem>
           <MenuItem>
-            <ShoppingCartOutlinedIcon />
+            <ShoppingCartOutlinedIcon onClick={handleAddProduct}/>
             <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
               4
             </span>
