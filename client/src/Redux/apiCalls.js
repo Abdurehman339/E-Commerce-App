@@ -1,5 +1,6 @@
 import { authReq } from "../Request";
 import { addProduct } from "../Request";
+import { fetchProduct } from "../Request";
 import { loginFailure, loginSuccess, loginStart, logOut } from "./userSlice";
 import { fetchingStart, Success, Failure } from "./productSlice";
 import { toast } from "react-toastify";
@@ -75,39 +76,59 @@ export const signUp = async (user) => {
 };
 
 //Add Product API Call Function
-export const AddProduct = async () => {
+export const AddProduct = async (dispatch, product) => {
   try {
-    // dispatch(fetchingStart())
     const res = await addProduct.post(
-      "/addProduct",
+      "/addproduct",
       {
-        title: "abc",
-        desc: "abc",
-        img: "abc",
-        categories: ["abc"],
-        size: "abc",
-        color: "abc",
-        price: 400,
+        title: product.title,
+        desc: product.description,
+        img: product.image,
+        categories: product.category,
+        size: product.size,
+        color: product.color,
+        price: product.price,
+        inStock: product.inStock
       },
       {
         headers: {
-          jwt: localStorage.getItem("token"),
+          'jwt' : localStorage.getItem("token"),
         },
       }
     );
-    res.status(200).json('Add Product Successfully')
-    // dispatch(Success(res.data));
-  } catch (error) {
+     const result = await res.json()
+    } catch (error) {
     toast.error("Something went wrong");
-    // dispatch(Failure());
   }
 };
 
 //Uploading Product Image
-const uploadImage = async (formData)=>{
+export const uploadImage = async (formData)=>{
   try {
-    const res = await addProduct.post('/uploadimage', formData)
+    const res = await addProduct.post('/uploadimage', formData,{
+      headers: {
+      'Content-Type': 'multipart/form-data'
+      }
+    })
+    return res.data
   } catch (error) {
     console.log(error)
   }
 }
+
+//Fetching All Products
+export const fetchProducts = async () => {
+  try {
+    const res = await fetchProduct.get(
+      "/fetchProduct",
+      {
+        headers: {
+          'jwt' : localStorage.getItem("token"),
+        }
+      }
+    );
+     return res.data
+    } catch (error) {
+    toast.error("Something went wrong");
+  }
+};

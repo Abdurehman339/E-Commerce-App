@@ -56,7 +56,7 @@ const Icon = styled.div`
 const Product = ({item}) => {
   return (
     <Container>
-        <Image src={item.img} alt="..." />
+        <Image src={`http://localhost:5000/images/1694336583588-IMG_1472.JPG`} alt="..." />
         <IconContainer>
           <Icon>
             <ShoppingCartOutlined/>
