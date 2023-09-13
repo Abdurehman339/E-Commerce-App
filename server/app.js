@@ -6,6 +6,7 @@ const port = 5000
 const auth = require('./routes/authentication')
 const addProduct = require('./routes/addProduct')
 const fetchProduct = require('./routes/fetchProduct')
+const addToCart = require('./routes/addToCart')
 const cors = require("cors");
 const multer = require("multer");
 const uuidv4 = require("uuid/v4");
@@ -44,6 +45,7 @@ app.use(express.json());
 app.use('/api',addProduct);
 app.use('/api/auth',auth);
 app.use('/api/fetch',fetchProduct);
+app.use('/api/cart',addToCart);
 
 //Uploading an Image of Product
 

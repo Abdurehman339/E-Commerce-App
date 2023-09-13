@@ -79,9 +79,8 @@ const Navbar = () => {
   const handleLogout = () => {
     logout(dispatch);
   };
-  const handleAddProduct = ()=>{
-    AddProduct();
-  }
+  const handleAddToCart = ()=>{
+  } 
   return (
     <Container>
       <Wrapper>
@@ -101,7 +100,7 @@ const Navbar = () => {
           </MenuItem>
           <MenuItem>{!user && "Register"}</MenuItem>
           <MenuItem>
-            <ShoppingCartOutlinedIcon onClick={handleAddProduct}/>
+            <ShoppingCartOutlinedIcon onClick={handleAddToCart}/>
             <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
               4
             </span>

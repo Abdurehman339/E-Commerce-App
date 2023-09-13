@@ -1,8 +1,9 @@
-import React from 'react'
-import styled from 'styled-components'
-import FavoriteBorder from '@mui/icons-material/FavoriteBorder';
-import ShoppingCartOutlined from '@mui/icons-material/ShoppingCartOutlined';
-import SearchOutlined from '@mui/icons-material/SearchOutlined';
+import React, { useState } from "react";
+import styled from "styled-components";
+import FavoriteBorder from "@mui/icons-material/FavoriteBorder";
+import ShoppingCartOutlined from "@mui/icons-material/ShoppingCartOutlined";
+import SearchOutlined from "@mui/icons-material/SearchOutlined";
+import Favorite from "@mui/icons-material/Favorite";
 
 const IconContainer = styled.div`
   opacity: 0;
@@ -17,23 +18,23 @@ const IconContainer = styled.div`
   align-items: center;
   justify-content: center;
   transition: all 0.5s ease;
-`
+`;
 
 const Container = styled.div`
-    margin: 3px;
-    position: relative;
-    height: 50vh;
-    width: 24vw;
-    background-color: #f5fbfd;
-    &:hover ${IconContainer}{  
-      opacity: 1;
-    }
-`
+  margin: 3px;
+  position: relative;
+  height: 50vh;
+  width: 24vw;
+  background-color: #f5fbfd;
+  &:hover ${IconContainer} {
+    opacity: 1;
+  }
+`;
 const Image = styled.img`
-    height: 100%;
-    width: 100%;
-    object-fit: cover;
-`
+  height: 100%;
+  width: 100%;
+  object-fit: cover;
+`;
 
 const Icon = styled.div`
   width: 50px;
@@ -47,29 +48,32 @@ const Icon = styled.div`
   opacity: 0.8;
   cursor: pointer;
   transition: all 0.2s ease;
-  &:hover{
+  &:hover {
     transform: scale(1.1);
   }
-`
+`;
 
-
-const Product = ({item}) => {
+const Product = ({ item }) => {
+  const [fav, setFav] = useState(false);
   return (
     <Container>
-        <Image src={`http://localhost:5000/images/1694336583588-IMG_1472.JPG`} alt="..." />
-        <IconContainer>
-          <Icon>
-            <ShoppingCartOutlined/>
-          </Icon>
-          <Icon>
-            <FavoriteBorder/>
-          </Icon>
-          <Icon>
-            <SearchOutlined/>
-          </Icon>
-        </IconContainer>
+      <Image
+        src={`http://localhost:5000/images/1694336583588-IMG_1472.JPG`}
+        alt="..."
+      />
+      <IconContainer>
+        <Icon>
+          <ShoppingCartOutlined />
+        </Icon>
+        <Icon onClick={(e) => setFav(!fav)}>
+          {fav ? <Favorite /> : <FavoriteBorder />}
+        </Icon>
+        <Icon>
+          <SearchOutlined />
+        </Icon>
+      </IconContainer>
     </Container>
-  )
-}
+  );
+};
 
-export default Product
+export default Product;
