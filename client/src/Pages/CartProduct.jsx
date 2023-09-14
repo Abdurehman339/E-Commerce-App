@@ -3,7 +3,10 @@ import styled from "styled-components";
 import Add from "@mui/icons-material/Add";
 import Remove from "@mui/icons-material/Remove";
 import { fetchSingleProduct } from "../Redux/apiCalls";
+import { RemovefromCart } from "../Redux/apiCalls";
 import Close from "@mui/icons-material/Close";
+import { useSelector } from "react-redux";
+
 
 const ProductContainer = styled.div`
   display: flex;
@@ -66,6 +69,8 @@ const ProductAmount = styled.span`
 const SingleCartProduct = ({ item }) => {
   const [details, setDetails] = useState({});
   const [qty, setQty] = useState(1);
+  const [close, setClose] = useState(false);
+  const user = useSelector((state) => state.rootReducer.user.currentUser);
   useEffect(() => {
     const product = async () => {
       const productDetails = await fetchSingleProduct(item.productId);
@@ -73,6 +78,10 @@ const SingleCartProduct = ({ item }) => {
     };
     product();
   }, []);
+  const handleRemovefromCart = async () => {
+    const res = await RemovefromCart(user,item.productId)
+    setClose(true)
+  }
 
   return (
     <ProductContainer key={item._id} style={{ position: "relative" }}>
@@ -83,6 +92,7 @@ const SingleCartProduct = ({ item }) => {
           right: "50",
           cursor: "pointer",
         }}
+        onClick={()=>handleRemovefromCart()}
       />
       <ProductImage
         src={`http://localhost:5000/images/${details.img}`}

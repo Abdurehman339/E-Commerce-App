@@ -3,7 +3,6 @@ import { addProduct } from "../Request";
 import { fetchProduct } from "../Request";
 import { cart } from "../Request";
 import { loginFailure, loginSuccess, loginStart, logOut } from "./userSlice";
-import { fetchingStart, Success, Failure } from "./productSlice";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
@@ -167,3 +166,36 @@ export const fetchSingleProduct = async (id) => {
     console.log(error);
   }
 };
+
+export const AddtoCart = async (user, productid, qty) => {
+  try {
+    const res = await cart.post('/addtocart',{
+      userid: user._id,
+      productid: productid,
+      qty: qty
+    },{
+      headers: {
+        jwt: localStorage.getItem('token')
+      }
+    })
+    return res.data
+  } catch (error) {
+    console.log(error)
+  }
+}
+
+export const RemovefromCart = async (user, productid) => {
+  try {
+    const res = await cart.post('/removefromcart',{
+      userid: user._id,
+      productid: productid
+    },{
+      headers: {
+        jwt: localStorage.getItem('token')
+      }
+    })
+    return res.data
+  } catch (error) {
+    console.log(error)
+  }
+}

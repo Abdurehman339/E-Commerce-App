@@ -2,8 +2,12 @@ import React, { useState } from "react";
 import styled from "styled-components";
 import FavoriteBorder from "@mui/icons-material/FavoriteBorder";
 import ShoppingCartOutlined from "@mui/icons-material/ShoppingCartOutlined";
+import ShoppingCart from '@mui/icons-material/ShoppingCart';
 import SearchOutlined from "@mui/icons-material/SearchOutlined";
 import Favorite from "@mui/icons-material/Favorite";
+import { AddtoCart } from "../Redux/apiCalls";
+import { RemovefromCart } from "../Redux/apiCalls";
+import { useSelector } from "react-redux";
 
 const IconContainer = styled.div`
   opacity: 0;
@@ -54,16 +58,28 @@ const Icon = styled.div`
 `;
 
 const Product = ({ item }) => {
+  const user = useSelector((state) => state.rootReducer.user.currentUser);
   const [fav, setFav] = useState(false);
+  const [cart, setCart] = useState(false);
+  const handleAddtoCart = async () => {
+    if(!cart){
+      const res = await AddtoCart(user, item._id, 1);
+      console.log(res)
+    } else {
+      const res = await RemovefromCart(user, item._id)
+      console.log(res)
+    }
+    setCart(!cart)
+  };
   return (
     <Container>
       <Image
-        src={`http://localhost:5000/images/1694336583588-IMG_1472.JPG`}
+        src={`http://localhost:5000/images/${item.img}`}
         alt="..."
       />
       <IconContainer>
-        <Icon>
-          <ShoppingCartOutlined />
+        <Icon onClick={()=>handleAddtoCart()}>
+           {cart? <ShoppingCart/> : <ShoppingCartOutlined/>}
         </Icon>
         <Icon onClick={(e) => setFav(!fav)}>
           {fav ? <Favorite /> : <FavoriteBorder />}
