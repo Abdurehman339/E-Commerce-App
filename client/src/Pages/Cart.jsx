@@ -1,4 +1,4 @@
-import React from "react";
+import { React, useEffect, useState } from "react";
 import styled from "styled-components";
 import Navbar from "../Components/Navbar";
 import Announcement from "../Components/Announcement";
@@ -7,6 +7,10 @@ import Footer from "../Components/Footer";
 import cap from "../Images/cap.png";
 import Add from "@mui/icons-material/Add";
 import Remove from "@mui/icons-material/Remove";
+import { manageCart } from "../Redux/apiCalls";
+import { fetchSingleProduct } from "../Redux/apiCalls";
+import { useSelector } from "react-redux";
+import SingleCartProduct from "./CartProduct";
 
 const Container = styled.div``;
 const Wrapper = styled.div`
@@ -43,10 +47,10 @@ const DetailsWrapper = styled.div`
   width: 100%;
   display: flex;
   flex-direction: column;
-`
+`;
 const Hr = styled.hr`
   margin-right: 10px;
-`
+`;
 const ProductContainer = styled.div`
   display: flex;
   padding: 20px;
@@ -100,10 +104,10 @@ const ProductQuantity = styled.div`
   border-radius: 10px;
 `;
 const ProductAmount = styled.span`
-    margin: 10px;
-    font-size: 40px;
-    font-weight: 300;
-`
+  margin: 10px;
+  font-size: 40px;
+  font-weight: 300;
+`;
 const SummaryContainer = styled.div`
   flex: 1;
   display: flex;
@@ -116,26 +120,35 @@ const SummaryContainer = styled.div`
 `;
 const SummaryTitle = styled.h1`
   font-weight: 300;
-`
+`;
 const SummaryDetails = styled.div`
   display: flex;
   align-items: center;
   justify-content: space-between;
   width: 100%;
   padding: 15px 40px;
-  font-size: ${props=>props.type === 'total'? '30px' : '15px'};
-  font-weight: ${props=>props.type === 'total'? '500' : '400'};
-`
-const SummaryDetailHeading = styled.span``
-const SummaryDetailValue = styled.span``
+  font-size: ${(props) => (props.type === "total" ? "30px" : "15px")};
+  font-weight: ${(props) => (props.type === "total" ? "500" : "400")};
+`;
+const SummaryDetailHeading = styled.span``;
+const SummaryDetailValue = styled.span``;
 const SummaryButton = styled.button`
   width: 100%;
   background-color: black;
   color: white;
   font-weight: 600;
   padding: 10px 0;
-`
+`;
 const Cart = () => {
+  const user = useSelector((state) => state.rootReducer.user.currentUser);
+  const [cart, setCart] = useState([]);
+  useEffect(() => {
+    const fetchingCart = async () => {
+      const res = await manageCart(user);
+      setCart(res);
+    };
+    fetchingCart();
+  }, []);
   return (
     <Container>
       <Navbar />
@@ -147,7 +160,7 @@ const Cart = () => {
             CONTINUE SHOPPING
           </TopButton>
           <TopLinksContainer>
-            <TopLink href="#">Shopping Bag(2)</TopLink>
+            <TopLink href="#">Shopping Bag({cart.length})</TopLink>
             <TopLink href="#">Your Wishlist(0)</TopLink>
           </TopLinksContainer>
           <TopButton bg="black" fc="white">
@@ -156,91 +169,31 @@ const Cart = () => {
         </TopButtonContainer>
         <DetailsContainer>
           <DetailsWrapper>
-            <ProductContainer>
-              <ProductImage src={cap} alt="img" />
-              <ProductDetails>
-                <ProductName>
-                  <b>Product: </b>Branded Cap
-                </ProductName>
-                <ProductId>
-                  <b>ID: </b>2364737468
-                </ProductId>
-                <ProductColor></ProductColor>
-                <ProductSize>
-                  <b>Size: </b>M
-                </ProductSize>
-              </ProductDetails>
-              <ProductAmountContainer>
-                <ProductQuantityContainer>
-                  <Remove style={{cursor: 'pointer'}}/>
-                  <ProductQuantity>2</ProductQuantity>
-                  <Add style={{cursor: 'pointer'}}/>
-                </ProductQuantityContainer>
-                <ProductAmount>$30</ProductAmount>
-              </ProductAmountContainer>
-            </ProductContainer>
-            <Hr></Hr>
-            <ProductContainer>
-              <ProductImage src={cap} alt="img" />
-              <ProductDetails>
-                <ProductName>
-                  <b>Product: </b>Branded Cap
-                </ProductName>
-                <ProductId>
-                  <b>ID: </b>2364737468
-                </ProductId>
-                <ProductColor></ProductColor>
-                <ProductSize>
-                  <b>Size: </b>M
-                </ProductSize>
-              </ProductDetails>
-              <ProductAmountContainer>
-                <ProductQuantityContainer>
-                  <Remove style={{cursor: 'pointer'}}/>
-                  <ProductQuantity>2</ProductQuantity>
-                  <Add style={{cursor: 'pointer'}}/>
-                </ProductQuantityContainer>
-                <ProductAmount>$30</ProductAmount>
-              </ProductAmountContainer>
-            </ProductContainer>
+            {cart.map((item) => {
+              return (
+                <SingleCartProduct key={item._id} item={item}/>
+              ); 
+            })}
           </DetailsWrapper>
           <SummaryContainer>
             <SummaryTitle>ORDER SUMMARY</SummaryTitle>
             <SummaryDetails>
-              <SummaryDetailHeading>
-                SubTotal
-              </SummaryDetailHeading>
-              <SummaryDetailValue>
-                $80
-              </SummaryDetailValue>
+              <SummaryDetailHeading>SubTotal</SummaryDetailHeading>
+              <SummaryDetailValue>$80</SummaryDetailValue>
             </SummaryDetails>
             <SummaryDetails>
-              <SummaryDetailHeading>
-                Estimated Shipping
-              </SummaryDetailHeading>
-              <SummaryDetailValue>
-                $80
-              </SummaryDetailValue>
+              <SummaryDetailHeading>Estimated Shipping</SummaryDetailHeading>
+              <SummaryDetailValue>$80</SummaryDetailValue>
             </SummaryDetails>
             <SummaryDetails>
-              <SummaryDetailHeading>
-                Shipping Discount
-              </SummaryDetailHeading>
-              <SummaryDetailValue>
-                $80
-              </SummaryDetailValue>
+              <SummaryDetailHeading>Shipping Discount</SummaryDetailHeading>
+              <SummaryDetailValue>$80</SummaryDetailValue>
             </SummaryDetails>
-            <SummaryDetails  type='total'>
-              <SummaryDetailHeading>
-                Total
-              </SummaryDetailHeading>
-              <SummaryDetailValue>
-                $80
-              </SummaryDetailValue>
+            <SummaryDetails type="total">
+              <SummaryDetailHeading>Total</SummaryDetailHeading>
+              <SummaryDetailValue>$80</SummaryDetailValue>
             </SummaryDetails>
-            <SummaryButton>
-              CHECKOUT NOW
-            </SummaryButton>
+            <SummaryButton>CHECKOUT NOW</SummaryButton>
           </SummaryContainer>
         </DetailsContainer>
       </Wrapper>

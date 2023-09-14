@@ -11,3 +11,7 @@ export const addProduct = axios.create({
 export const fetchProduct = axios.create({
     baseURL: 'http://localhost:5000/api/fetch'
 });
+
+export const cart = axios.create({
+    baseURL: 'http://localhost:5000/api/cart'
+});

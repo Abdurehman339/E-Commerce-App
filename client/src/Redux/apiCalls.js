@@ -1,6 +1,7 @@
 import { authReq } from "../Request";
 import { addProduct } from "../Request";
 import { fetchProduct } from "../Request";
+import { cart } from "../Request";
 import { loginFailure, loginSuccess, loginStart, logOut } from "./userSlice";
 import { fetchingStart, Success, Failure } from "./productSlice";
 import { toast } from "react-toastify";
@@ -88,47 +89,81 @@ export const AddProduct = async (dispatch, product) => {
         size: product.size,
         color: product.color,
         price: product.price,
-        inStock: product.inStock
+        inStock: product.inStock,
       },
       {
         headers: {
-          'jwt' : localStorage.getItem("token"),
+          jwt: localStorage.getItem("token"),
         },
       }
     );
-     const result = await res.json()
-    } catch (error) {
+    const result = await res.json();
+  } catch (error) {
     toast.error("Something went wrong");
   }
 };
 
 //Uploading Product Image
-export const uploadImage = async (formData)=>{
+export const uploadImage = async (formData) => {
   try {
-    const res = await addProduct.post('/uploadimage', formData,{
+    const res = await addProduct.post("/uploadimage", formData, {
       headers: {
-      'Content-Type': 'multipart/form-data'
-      }
-    })
-    return res.data
+        "Content-Type": "multipart/form-data",
+      },
+    });
+    return res.data;
   } catch (error) {
-    console.log(error)
+    console.log(error);
   }
-}
+};
 
 //Fetching All Products
 export const fetchProducts = async () => {
   try {
-    const res = await fetchProduct.get(
-      "/fetchProduct",
+    const res = await fetchProduct.get("/fetchProduct", {
+      headers: {
+        jwt: localStorage.getItem("token"),
+      },
+    });
+    return res.data;
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+//Fetching Cart Data
+export const manageCart = async (user) => {
+  try {
+    const res = await cart.post(
+      "/fetchcart",
+      {
+        userid: user._id
+      },
       {
         headers: {
-          'jwt' : localStorage.getItem("token"),
-        }
+          jwt: localStorage.getItem("token"),
+        },
       }
     );
-     return res.data
-    } catch (error) {
-    toast.error("Something went wrong");
+    return res.data.products;
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+//Fetching Single Product
+export const fetchSingleProduct = async (id) => {
+  try {
+    const res = await fetchProduct.get(
+      `/fetchsingleproduct/${id}`,
+      {
+        headers: {
+          jwt: localStorage.getItem("token"),
+        },
+      }
+    );
+    return res.data;
+  } catch (error) {
+    console.log(error);
   }
 };

@@ -50,7 +50,7 @@ router.post("/removefromcart", auth, async (req, res) => {
     }
 });
 
-router.get('/fetchcart',auth, async (req,res) => {
+router.post('/fetchcart',auth, async (req,res) => {
     try {
         const user = await User.findById(req.body.userid)
         if (user) {
