@@ -49,4 +49,22 @@ router.post("/removefromcart", auth, async (req, res) => {
         res.status(500).json('Internal Server Error')
     }
 });
+
+router.get('/fetchcart',auth, async (req,res) => {
+    try {
+        const user = await User.findById(req.body.userid)
+        if (user) {
+            const cart = await Cart.findOne({userId: req.body.userid})
+            if (cart) {
+                res.status(200).json(cart)
+            } else {
+                res.status(200).json('No Cart Exist')
+            }
+        } else {
+            res.status(403).json("Not a Valid User")
+        }
+    } catch (error) {
+        res.status(500).json("Internal Server Error")
+    }
+})
 module.exports = router;

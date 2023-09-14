@@ -5,6 +5,7 @@ import ShoppingCartOutlinedIcon from "@mui/icons-material/ShoppingCartOutlined";
 import { useDispatch, useSelector } from "react-redux";
 import { logout } from "../Redux/apiCalls";
 import { AddProduct } from "../Redux/apiCalls";
+import { Link } from "react-router-dom"
 
 const Container = styled.section`
   height: 60px;
@@ -79,8 +80,6 @@ const Navbar = () => {
   const handleLogout = () => {
     logout(dispatch);
   };
-  const handleAddToCart = ()=>{
-  } 
   return (
     <Container>
       <Wrapper>
@@ -100,7 +99,9 @@ const Navbar = () => {
           </MenuItem>
           <MenuItem>{!user && "Register"}</MenuItem>
           <MenuItem>
-            <ShoppingCartOutlinedIcon onClick={handleAddToCart}/>
+            <Link style={{color: "black"}} to={`/cart`}>
+              <ShoppingCartOutlinedIcon/>
+            </Link>
             <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
               4
             </span>
